@@ -391,6 +391,23 @@
             margin-top: 8px;
         }
 
+        .watermark-container {
+            position: relative;
+        }
+
+        .watermark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='200'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Microsoft JhengHei,PingFang TC,sans-serif' font-size='18' fill='rgba(0,0,0,0.08)' transform='rotate(-45,190,100)'%3E%E6%B2%88%E6%8C%AF%E8%B6%85%20%E4%BF%9D%E9%9A%AA%E7%B6%93%E7%B4%80%E4%BA%BA%20%E8%A3%BD%E4%BD%9C%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
         .share-footer {
             text-align: center;
             padding: 20px;
@@ -431,17 +448,6 @@
         .restart-section {
             text-align: center;
             margin-top: 20px;
-        }
-
-        .btn-share {
-            background: linear-gradient(135deg, #38f9d7, #43e97b);
-            color: #155724;
-            margin-right: 12px;
-        }
-
-        .btn-share:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.4);
         }
 
         .share-toast {
@@ -534,7 +540,8 @@
         </div>
 
         <div id="page-result" class="hidden">
-            <div id="share-capture">
+            <div id="share-capture" class="watermark-container">
+                <div class="watermark-overlay"></div>
                 <div class="card fade-in">
                     <h2 style="text-align:center; margin-bottom: 8px;">核保結果報告</h2>
                     <p style="text-align:center; color:#888; margin-bottom: 20px;" id="result-summary"></p>
@@ -548,7 +555,6 @@
                 </div>
             </div>
             <div class="restart-section">
-                <button class="btn btn-share" id="btn-share">分享結果</button>
                 <button class="btn btn-primary" id="btn-restart">重新挑戰</button>
             </div>
         </div>
@@ -3571,32 +3577,6 @@
             document.body.appendChild(toast);
             setTimeout(function() { toast.remove(); }, 2500);
         }
-
-        document.getElementById('btn-share').addEventListener('click', function() {
-            if (!lastResultData) return;
-            var text = buildShareText(lastResultData);
-
-            if (navigator.share) {
-                navigator.share({
-                    title: '保險大冒險 — 核保結果',
-                    text: text
-                }).catch(function() {});
-            } else if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(function() {
-                    showToast('結果已複製到剪貼簿！');
-                }).catch(function() {
-                    showToast('複製失敗，請手動複製');
-                });
-            } else {
-                var ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                showToast('結果已複製到剪貼簿！');
-            }
-        });
 
         btnRestart.addEventListener('click', function() {
             pageResult.classList.add('hidden');
