@@ -540,7 +540,7 @@
                     <p style="text-align:center; color:#888; margin-bottom: 20px;" id="result-summary"></p>
                 </div>
                 <div id="result-cards"></div>
-                <div class="share-footer hidden" id="share-footer">
+                <div class="share-footer" id="share-footer">
                     <p>來挑戰看看你的核保結果吧！</p>
                     <p class="share-url">https://sjc8032.github.io/insurance-adventure/</p>
                     <p class="share-author">沈振超 保險經紀人 製作</p>
@@ -554,7 +554,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" async></script>
     <script id="game-data-script">
     const GAME_DATA = {
   "gameTitle": "保險大冒險",
@@ -3575,73 +3574,28 @@
 
         document.getElementById('btn-share').addEventListener('click', function() {
             if (!lastResultData) return;
-            var shareBtn = document.getElementById('btn-share');
-            shareBtn.disabled = true;
-            shareBtn.textContent = '截圖中...';
+            var text = buildShareText(lastResultData);
 
-            // 顯示分享浮水印
-            var footer = document.getElementById('share-footer');
-            footer.classList.remove('hidden');
-
-            var captureEl = document.getElementById('share-capture');
-
-            // 檢查 html2canvas 是否可用
-            if (typeof html2canvas === 'undefined') {
-                // html2canvas 未載入，改用文字分享
-                footer.classList.add('hidden');
-                shareBtn.disabled = false;
-                shareBtn.textContent = '分享結果';
-                var text = buildShareText(lastResultData);
-                if (navigator.share) {
-                    navigator.share({ title: '保險大冒險', text: text }).catch(function() {});
-                } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(function() {
-                        showToast('結果已複製到剪貼簿！');
-                    });
-                }
-                return;
+            if (navigator.share) {
+                navigator.share({
+                    title: '保險大冒險 — 核保結果',
+                    text: text
+                }).catch(function() {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showToast('結果已複製到剪貼簿！');
+                }).catch(function() {
+                    showToast('複製失敗，請手動複製');
+                });
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('結果已複製到剪貼簿！');
             }
-
-            html2canvas(captureEl, {
-                backgroundColor: '#764ba2',
-                scale: 2,
-                useCORS: true,
-                scrollY: -window.scrollY
-            }).then(function(canvas) {
-                footer.classList.add('hidden');
-                shareBtn.disabled = false;
-                shareBtn.textContent = '分享結果';
-
-                canvas.toBlob(function(blob) {
-                    var file = new File([blob], 'insurance-adventure-result.png', { type: 'image/png' });
-
-                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        navigator.share({
-                            title: '保險大冒險 — 核保結果',
-                            text: '來挑戰看看你的核保結果吧！\nhttps://sjc8032.github.io/insurance-adventure/',
-                            files: [file]
-                        }).catch(function() {});
-                    } else {
-                        var link = document.createElement('a');
-                        link.download = 'insurance-adventure-result.png';
-                        link.href = canvas.toDataURL('image/png');
-                        link.click();
-                        showToast('結果圖片已下載！');
-                    }
-                }, 'image/png');
-            }).catch(function() {
-                footer.classList.add('hidden');
-                shareBtn.disabled = false;
-                shareBtn.textContent = '分享結果';
-                var text = buildShareText(lastResultData);
-                if (navigator.share) {
-                    navigator.share({ title: '保險大冒險', text: text }).catch(function() {});
-                } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(function() {
-                        showToast('截圖失敗，已複製文字結果');
-                    });
-                }
-            });
         });
 
         btnRestart.addEventListener('click', function() {
