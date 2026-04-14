@@ -1,0 +1,3573 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>保險大冒險</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 2em;
+            margin: 20px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        h1 .subtitle {
+            display: block;
+            font-size: 0.5em;
+            font-weight: normal;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        h2 {
+            color: #5a3e8e;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .question-title {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 1.3em;
+        }
+
+        .question-text {
+            color: #555;
+            line-height: 2;
+            margin-bottom: 20px;
+            font-size: 1.15em;
+        }
+
+        .question-text .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            border-radius: 20px;
+            height: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #43e97b, #38f9d7);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #5a3e8e;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0d4f5;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .bmi-display {
+            text-align: center;
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: none;
+        }
+
+        .bmi-normal { background: #d4edda; color: #155724; }
+        .bmi-warning { background: #fff3cd; color: #856404; }
+        .bmi-danger { background: #f8d7da; color: #721c24; }
+
+        /* 分類標題 */
+        .category-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #f0e6ff, #e8d5f5);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #5a3e8e;
+            font-size: 1.05em;
+            margin-top: 8px;
+        }
+
+        .category-header:first-child {
+            margin-top: 0;
+        }
+
+        /* 鼓勵訊息 */
+        .encourage-msg {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 10px;
+            font-size: 1em;
+            color: #8b4513;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 2px solid #e8e0f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .option-item:hover {
+            border-color: #764ba2;
+            background: #f8f4ff;
+        }
+
+        .option-item.selected {
+            border-color: #764ba2;
+            background: #ede4f7;
+        }
+
+        .option-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .option-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .option-item.selected .option-check {
+            background: #764ba2;
+            border-color: #764ba2;
+        }
+
+        .option-item.selected .option-check::after {
+            content: '\2713';
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .option-label {
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        .none-option {
+            grid-column: 1 / -1;
+            background: #f0fff0;
+            border-color: #b7e4c7;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .none-option.selected {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .none-option.selected .option-check {
+            background: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: #e8e0f0;
+            color: #5a3e8e;
+        }
+
+        .btn-secondary:hover {
+            background: #d8cceb;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+        }
+
+        .result-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .result-insurance-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #5a3e8e;
+        }
+
+        .result-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .badge-standard { background: #d4edda; color: #155724; }
+        .badge-light { background: #fff3cd; color: #856404; }
+        .badge-medium { background: #ffeaa7; color: #6c5200; }
+        .badge-heavy { background: #f8d7da; color: #721c24; }
+        .badge-exclude { background: #d6e9ff; color: #004085; }
+        .badge-defer { background: #e2d5f1; color: #4a2d7a; }
+        .badge-decline { background: #c0392b; color: #fff; }
+
+        .result-rate {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .result-details {
+            background: #f8f4ff;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .result-details h4 {
+            color: #5a3e8e;
+            margin-bottom: 8px;
+        }
+
+        .result-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-details li {
+            padding: 4px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .result-details li::before {
+            content: '\2022 ';
+            color: #764ba2;
+        }
+
+        .exclude-list {
+            background: #d6e9ff;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 8px;
+        }
+
+        .exclude-list span {
+            display: inline-block;
+            background: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin: 3px;
+            font-size: 0.85em;
+            color: #004085;
+        }
+
+        .multiplier-info {
+            text-align: center;
+            color: #856404;
+            font-size: 1.1em;
+            margin-top: 8px;
+        }
+
+        .restart-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, #38f9d7, #43e97b);
+            color: #155724;
+            margin-right: 12px;
+        }
+
+        .btn-share:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.4);
+        }
+
+        .share-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            z-index: 999;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            保險大冒險
+            <span class="subtitle">用輕鬆問答，體驗保險核保的世界</span>
+        </h1>
+
+        <div id="page-info" class="card fade-in">
+            <h2>先來認識你一下</h2>
+            <div class="form-group">
+                <label>性別</label>
+                <select id="gender">
+                    <option value="">請選擇</option>
+                    <option value="male">男性</option>
+                    <option value="female">女性</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>年齡</label>
+                <input type="number" id="age" placeholder="請輸入年齡" min="0" max="120">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>身高（公分）</label>
+                    <input type="number" id="height" placeholder="例：170" min="50" max="250" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>體重（公斤）</label>
+                    <input type="number" id="weight" placeholder="例：65" min="20" max="300" step="0.1">
+                </div>
+            </div>
+            <div id="bmi-display" class="bmi-display"></div>
+            <div class="btn-group" style="justify-content: flex-end;">
+                <button class="btn btn-primary" id="btn-start" disabled>開始冒險</button>
+            </div>
+        </div>
+
+        <div id="page-question" class="hidden">
+            <div class="progress-text" id="progress-text"></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="card fade-in" id="question-card">
+                <div class="question-title" id="q-title"></div>
+                <div class="question-text" id="q-text"></div>
+                <div class="options-grid" id="q-options"></div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="btn-prev">上一題</button>
+                    <button class="btn btn-primary" id="btn-next">下一題</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-result" class="hidden">
+            <div class="card fade-in">
+                <h2 style="text-align:center; margin-bottom: 8px;">核保結果報告</h2>
+                <p style="text-align:center; color:#888; margin-bottom: 20px;" id="result-summary"></p>
+            </div>
+            <div id="result-cards"></div>
+            <div class="restart-section">
+                <button class="btn btn-share" id="btn-share">分享結果</button>
+                <button class="btn btn-primary" id="btn-restart">重新挑戰</button>
+            </div>
+        </div>
+    </div>
+
+    <script id="game-data-script">
+    const GAME_DATA = {
+  "gameTitle": "保險大冒險",
+  "config": {
+    "baseRate": 100,
+    "maxRateBeforeDecline": 250,
+    "thresholds": [
+      {
+        "min": 100,
+        "max": 150,
+        "result": "標準體承保",
+        "multiplier": 1.0
+      },
+      {
+        "min": 151,
+        "max": 185,
+        "result": "輕度加費承保",
+        "multiplier": 1.25
+      },
+      {
+        "min": 186,
+        "max": 220,
+        "result": "中度加費承保",
+        "multiplier": 1.5
+      },
+      {
+        "min": 221,
+        "max": 250,
+        "result": "重度加費承保",
+        "multiplier": 2.0
+      },
+      {
+        "min": 251,
+        "max": 9999,
+        "result": "拒保",
+        "multiplier": 0
+      }
+    ]
+  },
+  "bmiRules": [
+    {
+      "range": "underweight",
+      "label": "BMI < 18.5",
+      "rates": {
+        "major": 25,
+        "medical": 25,
+        "life": 25,
+        "cancer": 0
+      }
+    },
+    {
+      "range": "normal",
+      "label": "BMI 18.5 - 29.9",
+      "rates": {
+        "major": 0,
+        "medical": 0,
+        "life": 0,
+        "cancer": 0
+      }
+    },
+    {
+      "range": "obese",
+      "label": "BMI >= 30.0",
+      "rates": {
+        "major": 50,
+        "medical": 50,
+        "life": 50,
+        "cancer": 25
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "title": "身體的維修清單",
+      "question": "回想一下，在過去這 365 天裡，你有沒有因為下列這些狀況，曾經去醫院『掛號看醫生』、或是『固定吃藥治療』過呢？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "酒精濫用成癮",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 100
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "藥物濫用成癮",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 100
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "眩暈症",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EAR"
+          }
+        },
+        {
+          "label": "腦震盪",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BRAIN"
+          }
+        },
+        {
+          "label": "食道潰瘍",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "食道出血",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "胃潰瘍",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "胃出血",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "十二指腸潰瘍",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "十二指腸出血",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "潰瘍性大腸炎",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 100
+          }
+        },
+        {
+          "label": "胰臟炎",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 50,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_PANCREAS"
+          }
+        },
+        {
+          "label": "肝膿瘍",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "黃疸",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "肝腫大",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "脾腫大",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "慢性支氣管炎",
+          "rates": {
+            "major": 100,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "氣喘",
+          "rates": {
+            "major": 100,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "肺膿瘍",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "肺栓塞",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "痛風",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "高血脂症",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 25,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "青光眼",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          }
+        },
+        {
+          "label": "白內障",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          }
+        }
+      ],
+      "highlights": [
+        "365 天"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "身體成績單的回檢警告",
+      "question": "這兩年去健檢時，醫生有沒有指著報告上的紅字，提醒你一定要回醫院複查，或是去大醫院掛專科門診？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "有紅字，但醫生只有叫我多注意飲食跟作息",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "已接受進一步檢查且結果完全正常",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "蛋白尿",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_KIDNEY"
+          }
+        },
+        {
+          "label": "血尿",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_KIDNEY"
+          }
+        },
+        {
+          "label": "肝功能指標 AST 異常",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 25
+          }
+        },
+        {
+          "label": "肝功能指標 ALT 異常",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 25
+          }
+        },
+        {
+          "label": "心電圖異常 (心律不整)",
+          "rates": {
+            "major": 999,
+            "medical": 0,
+            "life": 50,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "DEFER"
+          }
+        },
+        {
+          "label": "心電圖異常 (疑似缺血)",
+          "rates": {
+            "major": 999,
+            "medical": 0,
+            "life": 50,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "DEFER"
+          }
+        },
+        {
+          "label": "肺部結節",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "肺部陰影",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "甲狀腺結節",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_THYROID"
+          }
+        },
+        {
+          "label": "乳房結節",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_BREAST"
+          }
+        },
+        {
+          "label": "腫瘤標記 CEA 異常",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "腫瘤標記 AFP 異常",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "血糖數值紅字",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "血脂數值紅字",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          }
+        }
+      ],
+      "highlights": [
+        "兩年"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "長期的住院紀錄",
+      "question": "回想一下這五年內，你有沒有哪次是因為生大病、或是受傷太嚴重，在醫院病床上連續躺了超過一個禮拜（7 天以上）呢？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "脊椎骨折",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BONE"
+          }
+        },
+        {
+          "label": "大腿骨骨折",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BONE"
+          }
+        },
+        {
+          "label": "心臟繞道手術",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "心臟換瓣膜手術",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "嚴重肺炎 (曾住加護病房)",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "腦中風",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          }
+        },
+        {
+          "label": "精神疾病住院 (如憂鬱症或焦慮症)",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_MENTAL",
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "急性闌尾炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "紅斑性狼瘡住院",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          }
+        },
+        {
+          "label": "癌症住院治療",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "其他 (需檢附病歷個案評估)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        }
+      ],
+      "highlights": [
+        "五年內",
+        "超過一個禮拜（7 天以上）"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "身體大檢修",
+      "question": "現在我們要進行『身體大檢修』的五年回顧：在過去這五年內，你是否曾因為下列這些疾病，接受過醫師的診斷、治療或長期服藥？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "高血壓 (收縮壓超過140或舒張壓超過90)",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "狹心症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 25
+          },
+          "category": "A"
+        },
+        {
+          "label": "心肌梗塞",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 25
+          },
+          "category": "A"
+        },
+        {
+          "label": "心肌肥厚",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心內膜炎",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "風濕性心臟病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "先天性心臟病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "主動脈血管瘤",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心臟瓣膜畸型",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心臟瓣膜閉鎖不全",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心臟瓣膜狹窄",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "腦出血",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "腦梗塞",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "腦栓塞",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "暫時性腦缺血",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "B"
+        },
+        {
+          "label": "腦瘤",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "B"
+        },
+        {
+          "label": "腦動脈血管瘤",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "B"
+        },
+        {
+          "label": "腦動脈硬化症",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "B"
+        },
+        {
+          "label": "癲癇",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "肌肉萎縮症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "重症肌無力",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "智能障礙 (外表無法明顯判斷)",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER"
+          },
+          "category": "B"
+        },
+        {
+          "label": "巴金森氏症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "精神病",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_MENTAL",
+            "life": "DEFER"
+          },
+          "category": "B"
+        },
+        {
+          "label": "老年痴呆症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "多發性硬化症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 50
+          },
+          "category": "B"
+        },
+        {
+          "label": "肺氣腫",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 50
+          },
+          "category": "C"
+        },
+        {
+          "label": "支氣管擴張症",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 25
+          },
+          "category": "C"
+        },
+        {
+          "label": "塵肺症",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 25
+          },
+          "category": "C"
+        },
+        {
+          "label": "肺結核",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 25
+          },
+          "category": "C"
+        },
+        {
+          "label": "慢性阻塞性肺病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 50
+          },
+          "category": "C"
+        },
+        {
+          "label": "B型肝炎病毒帶原",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 25,
+            "cancer": 50
+          },
+          "category": "D"
+        },
+        {
+          "label": "C型肝炎病毒帶原",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 25,
+            "cancer": 50
+          },
+          "category": "D"
+        },
+        {
+          "label": "肝炎 (非帶原狀態)",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "D"
+        },
+        {
+          "label": "肝內結石",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_LIVER"
+          },
+          "category": "D"
+        },
+        {
+          "label": "肝硬化",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "D"
+        },
+        {
+          "label": "肝功能異常 (GOT異常)",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "D"
+        },
+        {
+          "label": "肝功能異常 (GPT異常)",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "D"
+        },
+        {
+          "label": "腎臟炎",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "腎病症候群",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "腎機能不全",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "life": "DEFER"
+          },
+          "category": "E"
+        },
+        {
+          "label": "尿毒",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 25
+          },
+          "category": "E"
+        },
+        {
+          "label": "腎囊胞",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_KIDNEY"
+          },
+          "category": "E"
+        },
+        {
+          "label": "視網膜出血",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          },
+          "category": "F"
+        },
+        {
+          "label": "視網膜剝離",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          },
+          "category": "F"
+        },
+        {
+          "label": "視神經病變",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          },
+          "category": "F"
+        },
+        {
+          "label": "癌症 (惡性腫瘤)",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "G"
+        },
+        {
+          "label": "血友病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "H"
+        },
+        {
+          "label": "白血病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "H"
+        },
+        {
+          "label": "再生不良性貧血",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "H"
+        },
+        {
+          "label": "地中海型貧血",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "H"
+        },
+        {
+          "label": "紫斑症",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "H"
+        },
+        {
+          "label": "糖尿病",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 25
+          },
+          "category": "I"
+        },
+        {
+          "label": "類風濕性關節炎",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 25
+          },
+          "category": "J"
+        },
+        {
+          "label": "肢端肥大症",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "I"
+        },
+        {
+          "label": "腦下垂體機能亢進",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "I"
+        },
+        {
+          "label": "腦下垂體機能低下",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 50
+          },
+          "category": "I"
+        },
+        {
+          "label": "甲狀腺功能亢進",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 25
+          },
+          "category": "I"
+        },
+        {
+          "label": "甲狀腺功能低下",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 25
+          },
+          "category": "I"
+        },
+        {
+          "label": "副甲狀腺功能亢進",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 25
+          },
+          "category": "I"
+        },
+        {
+          "label": "副甲狀腺功能低下",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 25
+          },
+          "category": "I"
+        },
+        {
+          "label": "紅斑性狼瘡",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 50
+          },
+          "category": "J"
+        },
+        {
+          "label": "膠原症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 50
+          },
+          "category": "J"
+        },
+        {
+          "label": "愛滋病",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "K"
+        },
+        {
+          "label": "愛滋病帶原",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          },
+          "category": "K"
+        }
+      ],
+      "categoryNames": {
+        "A": "心血管相關",
+        "B": "腦部與神經相關",
+        "C": "呼吸系統相關",
+        "D": "肝臟相關",
+        "E": "腎臟相關",
+        "F": "眼部相關",
+        "G": "癌症相關",
+        "H": "血液相關",
+        "I": "內分泌與代謝相關",
+        "J": "自體免疫相關",
+        "K": "愛滋相關"
+      },
+      "highlights": [
+        "五年內"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "日常的身體功能",
+      "question": "接著來看看日常的身體功能：目前你的身體各部位，有沒有哪些『運作不太一樣』，或是『缺少了某些部分』，讓你生活上需要特別照顧或輔助的？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "雙眼失明",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "單眼失明",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EYE"
+          }
+        },
+        {
+          "label": "聾啞",
+          "rates": {
+            "major": 999,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "言語機能障害",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SPEECH"
+          }
+        },
+        {
+          "label": "咀嚼機能障害",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 50,
+            "cancer": 25
+          }
+        },
+        {
+          "label": "四肢缺肢",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_LIMB"
+          }
+        },
+        {
+          "label": "四肢麻痺",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 50
+          }
+        },
+        {
+          "label": "四肢變形",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_LIMB"
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "婦女專屬關心",
+      "question": "這部分是專屬女性朋友的關心：在過去這一年內，妳是否曾因為胸部發炎、生理期不規律、或是子宮相關的狀況去過婦產科？另外，也請告訴我們，妳現在是否正沉浸在準備迎接新生命的喜悅（懷孕）中呢？",
+      "type": "multiple",
+      "gender": "female",
+      "options": [
+        {
+          "label": "乳腺炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BREAST"
+          }
+        },
+        {
+          "label": "乳漏症",
+          "rates": {
+            "major": 50,
+            "medical": 25,
+            "life": 25,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "子宮內膜異位症",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_UTERUS"
+          }
+        },
+        {
+          "label": "陰道異常出血 (已確診為良性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_UTERUS"
+          }
+        },
+        {
+          "label": "陰道異常出血 (原因尚未確診)",
+          "rates": {
+            "major": 0,
+            "medical": 999,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "major": "DEFER",
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "懷孕 (28週以內)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_PREGNANCY"
+          }
+        },
+        {
+          "label": "懷孕 (超過28週)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        }
+      ],
+      "highlights": [
+        "一年內"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "常見的小毛病",
+      "question": "最後一項身體檢查：除了前面提到那些大條的，這一年內你有沒有因為下面這些『常見的小毛病』，曾被醫師說過你罹患了這些病，或是去診所掛號拿藥、治療過呢？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "肺炎",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "肋膜炎",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "氣胸",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心律不整",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "心雜音",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "冠狀動脈硬化",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 0
+          },
+          "category": "A"
+        },
+        {
+          "label": "動靜脈炎",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_VEIN"
+          },
+          "category": "A"
+        },
+        {
+          "label": "動靜脈畸型",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_VEIN"
+          },
+          "category": "A"
+        },
+        {
+          "label": "靜脈曲張",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_VEIN"
+          },
+          "category": "A"
+        },
+        {
+          "label": "胃炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          },
+          "category": "B"
+        },
+        {
+          "label": "腸炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          },
+          "category": "B"
+        },
+        {
+          "label": "脂肪肝",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 25
+          },
+          "category": "B"
+        },
+        {
+          "label": "膽石症",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GALL"
+          },
+          "category": "B"
+        },
+        {
+          "label": "膽囊炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GALL"
+          },
+          "category": "B"
+        },
+        {
+          "label": "腹膜炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          },
+          "category": "B"
+        },
+        {
+          "label": "腎結石",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_STONE"
+          },
+          "category": "C"
+        },
+        {
+          "label": "輸尿管結石",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_STONE"
+          },
+          "category": "C"
+        },
+        {
+          "label": "膀胱結石",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_STONE"
+          },
+          "category": "C"
+        },
+        {
+          "label": "腎膿瘍",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "C"
+        },
+        {
+          "label": "腎水腫",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          },
+          "category": "C"
+        },
+        {
+          "label": "腎硬化症",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 100,
+            "cancer": 25
+          },
+          "category": "C"
+        },
+        {
+          "label": "尿道炎",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_URINARY"
+          },
+          "category": "C"
+        },
+        {
+          "label": "血尿",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_URINARY"
+          },
+          "category": "C"
+        },
+        {
+          "label": "蛋白尿",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_URINARY"
+          },
+          "category": "C"
+        },
+        {
+          "label": "腦膜炎",
+          "rates": {
+            "major": 100,
+            "medical": 100,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "D"
+        },
+        {
+          "label": "關節炎",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_JOINT"
+          },
+          "category": "D"
+        },
+        {
+          "label": "脊髓炎",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SPINE"
+          },
+          "category": "D"
+        },
+        {
+          "label": "脊椎炎",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SPINE"
+          },
+          "category": "D"
+        },
+        {
+          "label": "椎間盤凸出",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SPINE"
+          },
+          "category": "D"
+        },
+        {
+          "label": "顏面神經麻痺",
+          "rates": {
+            "major": 25,
+            "medical": 25,
+            "life": 0,
+            "cancer": 0
+          },
+          "category": "D"
+        },
+        {
+          "label": "坐骨神經痛",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SPINE"
+          },
+          "category": "D"
+        },
+        {
+          "label": "中耳炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EAR"
+          },
+          "category": "E"
+        },
+        {
+          "label": "內耳炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EAR"
+          },
+          "category": "E"
+        },
+        {
+          "label": "梅尼爾氏症",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_EAR"
+          },
+          "category": "E"
+        },
+        {
+          "label": "鼻竇炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_NOSE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "鼻中膈彎曲",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_NOSE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "慢性扁桃腺炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_THROAT"
+          },
+          "category": "E"
+        },
+        {
+          "label": "舌潰爛",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          },
+          "category": "E"
+        },
+        {
+          "label": "皮膚潰爛",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          },
+          "category": "E"
+        },
+        {
+          "label": "淋病",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "梅毒",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "淋巴腺炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          },
+          "category": "E"
+        },
+        {
+          "label": "淋巴腺腫大",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          },
+          "category": "E"
+        },
+        {
+          "label": "蠶豆症",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "川崎氏症",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "舞蹈症",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 50,
+            "cancer": 0
+          },
+          "category": "E"
+        },
+        {
+          "label": "前列腺炎 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_PROSTATE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "前列腺肥大 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_PROSTATE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "睪丸腫大 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_TESTICLE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "副睪丸腫大 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_TESTICLE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "隱睪症 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_TESTICLE"
+          },
+          "category": "E"
+        },
+        {
+          "label": "精索靜脈曲張 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_VEIN"
+          },
+          "category": "E"
+        },
+        {
+          "label": "疝氣 (男性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_HERNIA"
+          },
+          "category": "E"
+        },
+        {
+          "label": "卵巢囊腫 (女性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_UTERUS"
+          },
+          "category": "E"
+        },
+        {
+          "label": "骨盆腔炎 (女性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_PELVIS"
+          },
+          "category": "E"
+        },
+        {
+          "label": "陰道炎 (女性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_VAGINA"
+          },
+          "category": "E"
+        },
+        {
+          "label": "子宮頸糜爛 (女性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_UTERUS"
+          },
+          "category": "E"
+        },
+        {
+          "label": "子宮肌瘤 (女性)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_UTERUS"
+          },
+          "category": "E"
+        },
+        {
+          "label": "乳房纖維囊腫 (女性)",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_BREAST"
+          },
+          "category": "E"
+        }
+      ],
+      "categoryNames": {
+        "A": "呼吸/心臟類",
+        "B": "消化/肝膽類",
+        "C": "泌尿/腎臟類",
+        "D": "神經/骨骼類",
+        "E": "五官/皮膚/其他"
+      },
+      "highlights": [
+        "一年內"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "進階的詳細檢查",
+      "question": "醫生覺得不太對勁喔！這兩年內，你有沒有因為同一個受傷或生病的原因，在看完醫生後，還被醫生特別交代要做以下這些比較深入的詳細檢查呢？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "六個月內有二次或二次以上的 X 光檢查",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_CHECK"
+          }
+        },
+        {
+          "label": "六個月內有二次或二次以上的超音波檢查",
+          "rates": {
+            "major": 50,
+            "medical": 0,
+            "life": 25,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_CHECK"
+          }
+        },
+        {
+          "label": "六個月內有二次或二次以上的血液檢查",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 25
+          },
+          "special": {
+            "medical": "EXCLUDE_CHECK"
+          }
+        },
+        {
+          "label": "細胞學檢查",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 999
+          },
+          "special": {
+            "life": "DEFER"
+          }
+        },
+        {
+          "label": "內視鏡檢查",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 50,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "EXCLUDE_GI"
+          }
+        },
+        {
+          "label": "核磁共振檢查 (MRI)",
+          "rates": {
+            "major": 999,
+            "medical": 0,
+            "life": 100,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "DEFER"
+          }
+        },
+        {
+          "label": "電腦斷層檢查 (CT)",
+          "rates": {
+            "major": 999,
+            "medical": 0,
+            "life": 100,
+            "cancer": 50
+          },
+          "special": {
+            "medical": "DEFER"
+          }
+        },
+        {
+          "label": "正子攝影檢查 (PET)",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 999,
+            "cancer": 999
+          }
+        },
+        {
+          "label": "肌電圖檢查",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 50,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_NERVE"
+          }
+        },
+        {
+          "label": "神經傳導檢查",
+          "rates": {
+            "major": 100,
+            "medical": 0,
+            "life": 50,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_NERVE"
+          }
+        }
+      ],
+      "highlights": [
+        "兩年內"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "最近的身體微恙",
+      "question": "最後一個問題！最近這兩個月內，你有沒有因為任何的小感冒、意外受傷，或是突然覺得哪裡不舒服，跑去診所或醫院看醫生、掛號診斷，甚至現在手邊還有藥在吃的？",
+      "type": "multiple",
+      "options": [
+        {
+          "label": "一般感冒 (已痊癒)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "意外受傷 (治療中)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_WOUND"
+          }
+        },
+        {
+          "label": "意外受傷 (已痊癒)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "牙齒治療 (洗牙、補牙、拔牙)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "急性腸胃炎 (已痊癒)",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          }
+        },
+        {
+          "label": "皮膚炎",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SKIN"
+          }
+        },
+        {
+          "label": "濕疹",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_SKIN"
+          }
+        },
+        {
+          "label": "物理治療",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BONE"
+          }
+        },
+        {
+          "label": "復健中",
+          "rates": {
+            "major": 25,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "medical": "EXCLUDE_BONE"
+          }
+        },
+        {
+          "label": "準備接受住院治療",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "準備接受手術治療",
+          "rates": {
+            "major": 0,
+            "medical": 0,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "major": "DEFER",
+            "medical": "DEFER",
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "原因不明的症狀 (如持續發燒)",
+          "rates": {
+            "major": 999,
+            "medical": 999,
+            "life": 0,
+            "cancer": 0
+          },
+          "special": {
+            "life": "DEFER",
+            "cancer": "DEFER"
+          }
+        },
+        {
+          "label": "定期慢性病拿藥",
+          "rates": {
+            "major": 50,
+            "medical": 50,
+            "life": 25,
+            "cancer": 0
+          }
+        }
+      ],
+      "highlights": [
+        "兩個月內"
+      ]
+    }
+  ]
+};
+    </script>
+    <script>
+    (function() {
+        let gameData = GAME_DATA;
+        let currentQuestion = 0;
+        let questions = [];
+        let userSelections = {};
+        let userInfo = {};
+
+        const encourageMessages = [
+            '加油！再看一下就快完了！',
+            '你很棒，繼續往下看！',
+            '快到了，再堅持一下！',
+            '辛苦了，再一小段就結束！',
+            '保持耐心，馬上就看完囉！',
+        ];
+
+        const pageInfo = document.getElementById('page-info');
+        const pageQuestion = document.getElementById('page-question');
+        const pageResult = document.getElementById('page-result');
+        const btnStart = document.getElementById('btn-start');
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnRestart = document.getElementById('btn-restart');
+        const genderSelect = document.getElementById('gender');
+        const ageInput = document.getElementById('age');
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const bmiDisplay = document.getElementById('bmi-display');
+
+        function calcBMI() {
+            const h = parseFloat(heightInput.value);
+            const w = parseFloat(weightInput.value);
+            if (!h || !w || h <= 0 || w <= 0) {
+                bmiDisplay.style.display = 'none';
+                return null;
+            }
+            const bmi = w / ((h / 100) ** 2);
+            bmiDisplay.style.display = 'block';
+            bmiDisplay.className = 'bmi-display';
+            let label, cls;
+            if (bmi < 18.5) { label = '過輕'; cls = 'bmi-warning'; }
+            else if (bmi < 30) { label = '正常'; cls = 'bmi-normal'; }
+            else { label = '肥胖'; cls = 'bmi-danger'; }
+            bmiDisplay.classList.add(cls);
+            bmiDisplay.textContent = 'BMI：' + bmi.toFixed(1) + '（' + label + '）';
+            return bmi;
+        }
+
+        function validateInfo() {
+            const gender = genderSelect.value;
+            const age = ageInput.value;
+            const bmi = calcBMI();
+            btnStart.disabled = !(gender && age && bmi);
+        }
+
+        genderSelect.addEventListener('change', validateInfo);
+        ageInput.addEventListener('input', validateInfo);
+        heightInput.addEventListener('input', validateInfo);
+        weightInput.addEventListener('input', validateInfo);
+
+        btnStart.addEventListener('click', function() {
+            userInfo = {
+                gender: genderSelect.value,
+                age: parseInt(ageInput.value),
+                height: parseFloat(heightInput.value),
+                weight: parseFloat(weightInput.value),
+                bmi: parseFloat(weightInput.value) / ((parseFloat(heightInput.value) / 100) ** 2)
+            };
+            questions = gameData.questions.filter(function(q) {
+                if (q.gender === 'female' && userInfo.gender === 'male') return false;
+                return true;
+            });
+            userSelections = {};
+            currentQuestion = 0;
+            pageInfo.classList.add('hidden');
+            pageQuestion.classList.remove('hidden');
+            renderQuestion();
+        });
+
+        function highlightQuestion(text, highlights) {
+            if (!highlights || highlights.length === 0) return text;
+            let result = text;
+            highlights.forEach(function(h) {
+                result = result.replace(new RegExp(h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                    '<span class="highlight">' + h + '</span>');
+            });
+            return result;
+        }
+
+        // 點選選項時只切換樣式，不重繪整頁
+        function toggleOption(idx) {
+            var q = questions[currentQuestion];
+            var sel = userSelections[q.id] || [];
+            if (sel.includes(idx)) {
+                sel = sel.filter(function(i) { return i !== idx; });
+            } else {
+                sel.push(idx);
+            }
+            userSelections[q.id] = sel;
+            updateOptionStyles();
+        }
+
+        function clearSelections() {
+            var q = questions[currentQuestion];
+            userSelections[q.id] = [];
+            updateOptionStyles();
+        }
+
+        function updateOptionStyles() {
+            var q = questions[currentQuestion];
+            var sel = userSelections[q.id] || [];
+            var optionsDiv = document.getElementById('q-options');
+            var items = optionsDiv.querySelectorAll('.option-item:not(.none-option)');
+            items.forEach(function(item) {
+                var idx = parseInt(item.getAttribute('data-idx'));
+                if (sel.includes(idx)) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+            var noneItem = optionsDiv.querySelector('.none-option');
+            if (noneItem) {
+                if (sel.length === 0) {
+                    noneItem.classList.add('selected');
+                } else {
+                    noneItem.classList.remove('selected');
+                }
+            }
+        }
+
+        function renderQuestion() {
+            var q = questions[currentQuestion];
+            var total = questions.length;
+
+            document.getElementById('progress-text').textContent = '第 ' + (currentQuestion + 1) + ' 題 / 共 ' + total + ' 題';
+            document.getElementById('progress-fill').style.width = ((currentQuestion + 1) / total * 100) + '%';
+            document.getElementById('q-title').textContent = q.title;
+            document.getElementById('q-text').innerHTML = highlightQuestion(q.question, q.highlights);
+
+            var optionsDiv = document.getElementById('q-options');
+            optionsDiv.innerHTML = '';
+
+            var selected = userSelections[q.id] || [];
+
+            var options = q.options.filter(function(opt) {
+                if (userInfo.gender === 'female' && opt.label.includes('(男性)')) return false;
+                if (userInfo.gender === 'male' && opt.label.includes('(女性)')) return false;
+                return true;
+            });
+
+            var hasCategoryNames = q.categoryNames;
+            var encourageInterval = 15;
+            var optionCounter = 0;
+
+            function createOptionDiv(opt, idx, isSelected) {
+                var div = document.createElement('div');
+                div.className = 'option-item' + (isSelected ? ' selected' : '');
+                div.setAttribute('data-idx', idx);
+                div.innerHTML = '<div class="option-check"></div><span class="option-label">' + opt.label + '</span>';
+                div.addEventListener('click', function() { toggleOption(idx); });
+                return div;
+            }
+
+            function maybeAddEncourage(counter, totalOpts) {
+                if (counter > 0 && counter % encourageInterval === 0 && counter < totalOpts) {
+                    var msgDiv = document.createElement('div');
+                    msgDiv.className = 'encourage-msg';
+                    msgDiv.textContent = encourageMessages[Math.floor(Math.random() * encourageMessages.length)];
+                    optionsDiv.appendChild(msgDiv);
+                }
+            }
+
+            if (hasCategoryNames) {
+                var categoryOrder = Object.keys(q.categoryNames);
+                var grouped = {};
+                categoryOrder.forEach(function(cat) { grouped[cat] = []; });
+                options.forEach(function(opt, i) {
+                    var cat = opt.category || categoryOrder[categoryOrder.length - 1];
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push({ opt: opt, idx: i });
+                });
+
+                categoryOrder.forEach(function(cat) {
+                    if (!grouped[cat] || grouped[cat].length === 0) return;
+                    var header = document.createElement('div');
+                    header.className = 'category-header';
+                    header.textContent = cat + '. ' + q.categoryNames[cat];
+                    optionsDiv.appendChild(header);
+
+                    grouped[cat].forEach(function(item) {
+                        optionCounter++;
+                        optionsDiv.appendChild(createOptionDiv(item.opt, item.idx, selected.includes(item.idx)));
+                        maybeAddEncourage(optionCounter, options.length);
+                    });
+                });
+            } else {
+                options.forEach(function(opt, idx) {
+                    optionCounter++;
+                    optionsDiv.appendChild(createOptionDiv(opt, idx, selected.includes(idx)));
+                    maybeAddEncourage(optionCounter, options.length);
+                });
+            }
+
+            // 「以上皆無」放最下面
+            var noneDiv = document.createElement('div');
+            noneDiv.className = 'option-item none-option' + (selected.length === 0 ? ' selected' : '');
+            noneDiv.innerHTML = '<div class="option-check"></div><span class="option-label">以上皆無</span>';
+            noneDiv.addEventListener('click', function() { clearSelections(); });
+            optionsDiv.appendChild(noneDiv);
+
+            btnPrev.style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+            btnNext.textContent = currentQuestion === total - 1 ? '查看結果' : '下一題';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        btnNext.addEventListener('click', function() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        btnPrev.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        });
+
+        function showResult() {
+            var rates = { major: 100, medical: 100, life: 100, cancer: 100 };
+            var specials = { major: [], medical: [], life: [], cancer: [] };
+            var details = { major: [], medical: [], life: [], cancer: [] };
+            var insuranceKeys = ['major', 'medical', 'life', 'cancer'];
+
+            var bmiRules = gameData.bmiRules;
+            var bmiRule = null;
+            if (userInfo.bmi < 18.5) bmiRule = bmiRules.find(function(r) { return r.range === 'underweight'; });
+            else if (userInfo.bmi < 30) bmiRule = bmiRules.find(function(r) { return r.range === 'normal'; });
+            else bmiRule = bmiRules.find(function(r) { return r.range === 'obese'; });
+
+            if (bmiRule) {
+                insuranceKeys.forEach(function(key) {
+                    if (bmiRule.rates[key] > 0) {
+                        rates[key] += bmiRule.rates[key];
+                        details[key].push('BMI ' + userInfo.bmi.toFixed(1) + '（' + bmiRule.label + '）→ +' + bmiRule.rates[key] + '%');
+                    }
+                });
+            }
+
+            questions.forEach(function(q) {
+                var selected = userSelections[q.id] || [];
+                var filteredOptions = q.options.filter(function(opt) {
+                    if (userInfo.gender === 'female' && opt.label.includes('(男性)')) return false;
+                    if (userInfo.gender === 'male' && opt.label.includes('(女性)')) return false;
+                    return true;
+                });
+                selected.forEach(function(idx) {
+                    var opt = filteredOptions[idx];
+                    if (!opt) return;
+                    insuranceKeys.forEach(function(key) {
+                        if (opt.rates[key] > 0) {
+                            rates[key] += opt.rates[key];
+                            details[key].push(opt.label + ' → +' + opt.rates[key] + '%');
+                        }
+                        if (opt.special && opt.special[key]) {
+                            specials[key].push({ type: opt.special[key], label: opt.label });
+                        }
+                    });
+                });
+            });
+
+            var excludeNames = {
+                EXCLUDE_EAR: '耳部', EXCLUDE_BRAIN: '腦部', EXCLUDE_GI: '消化系統',
+                EXCLUDE_PANCREAS: '胰臟', EXCLUDE_KIDNEY: '腎臟', EXCLUDE_EYE: '眼部',
+                EXCLUDE_THYROID: '甲狀腺', EXCLUDE_BREAST: '乳房', EXCLUDE_BONE: '骨骼',
+                EXCLUDE_MENTAL: '精神疾病', EXCLUDE_SPEECH: '言語機能', EXCLUDE_LIMB: '四肢',
+                EXCLUDE_UTERUS: '子宮', EXCLUDE_PREGNANCY: '懷孕相關', EXCLUDE_LIVER: '肝臟',
+                EXCLUDE_VEIN: '血管', EXCLUDE_GALL: '膽囊', EXCLUDE_STONE: '結石',
+                EXCLUDE_URINARY: '泌尿系統', EXCLUDE_JOINT: '關節', EXCLUDE_SPINE: '脊椎',
+                EXCLUDE_NOSE: '鼻部', EXCLUDE_THROAT: '咽喉', EXCLUDE_PROSTATE: '前列腺',
+                EXCLUDE_TESTICLE: '睪丸', EXCLUDE_HERNIA: '疝氣', EXCLUDE_PELVIS: '骨盆腔',
+                EXCLUDE_VAGINA: '陰道', EXCLUDE_CHECK: '檢查相關', EXCLUDE_NERVE: '神經',
+                EXCLUDE_SKIN: '皮膚', EXCLUDE_WOUND: '傷口'
+            };
+
+            var thresholds = gameData.config.thresholds;
+            var insuranceNames = {
+                major: '重大傷病險', medical: '醫療險', life: '壽險', cancer: '癌症險'
+            };
+
+            var resultCardsDiv = document.getElementById('result-cards');
+            resultCardsDiv.innerHTML = '';
+            var shareItems = [];
+
+            insuranceKeys.forEach(function(key) {
+                var rate = rates[key];
+                var sp = specials[key];
+                var hasDefer = sp.some(function(s) { return s.type === 'DEFER'; });
+                var excludes = sp.filter(function(s) { return s.type.startsWith('EXCLUDE_'); });
+                var uniqueExcludes = [];
+                var seen = {};
+                excludes.forEach(function(e) {
+                    if (!seen[e.type]) { seen[e.type] = true; uniqueExcludes.push(e.type); }
+                });
+
+                var resultText, badgeClass, multiplierText = '';
+
+                if (hasDefer) {
+                    resultText = '延期承保';
+                    badgeClass = 'badge-defer';
+                } else if (rate > 250) {
+                    resultText = '拒保';
+                    badgeClass = 'badge-decline';
+                } else {
+                    var t = thresholds.find(function(t) { return rate >= t.min && rate <= t.max; });
+                    if (t) {
+                        resultText = t.result;
+                        if (t.multiplier === 1.0) badgeClass = 'badge-standard';
+                        else if (t.multiplier === 1.25) { badgeClass = 'badge-light'; multiplierText = '保費 × 1.25'; }
+                        else if (t.multiplier === 1.5) { badgeClass = 'badge-medium'; multiplierText = '保費 × 1.5'; }
+                        else if (t.multiplier === 2.0) { badgeClass = 'badge-heavy'; multiplierText = '保費 × 2.0'; }
+                        else { badgeClass = 'badge-decline'; }
+                    } else {
+                        resultText = '拒保';
+                        badgeClass = 'badge-decline';
+                    }
+                }
+
+                var html = '<div class="result-card fade-in">' +
+                    '<div class="result-header">' +
+                    '<span class="result-insurance-name">' + insuranceNames[key] + '</span>' +
+                    '<span class="result-badge ' + badgeClass + '">' + resultText + '</span></div>' +
+                    '<div class="result-rate" style="color:' + (badgeClass === 'badge-standard' ? '#28a745' : badgeClass === 'badge-decline' ? '#c0392b' : '#e67e22') + '">' + rate + '%</div>';
+
+                if (multiplierText) {
+                    html += '<div class="multiplier-info">' + multiplierText + '</div>';
+                }
+
+                if (uniqueExcludes.length > 0) {
+                    html += '<div class="exclude-list"><strong>除外部位：</strong><br>';
+                    uniqueExcludes.forEach(function(ex) {
+                        html += '<span>' + (excludeNames[ex] || ex) + '</span>';
+                    });
+                    html += '</div>';
+                }
+
+                if (hasDefer) {
+                    var deferItems = sp.filter(function(s) { return s.type === 'DEFER'; });
+                    html += '<div class="exclude-list" style="background:#e2d5f1;"><strong>延期原因：</strong><br>';
+                    deferItems.forEach(function(d) {
+                        html += '<span style="color:#4a2d7a;">' + d.label + '</span>';
+                    });
+                    html += '</div>';
+                }
+
+                if (details[key].length > 0) {
+                    html += '<div class="result-details"><h4>加費明細</h4><ul>';
+                    details[key].forEach(function(d) {
+                        html += '<li>' + d + '</li>';
+                    });
+                    html += '</ul></div>';
+                }
+
+                html += '</div>';
+                resultCardsDiv.innerHTML += html;
+                shareItems.push({ name: insuranceNames[key], resultText: resultText, rate: rate, multiplier: multiplierText });
+            });
+
+            var summaryText = (userInfo.gender === 'male' ? '男性' : '女性') + '，' + userInfo.age + ' 歲，BMI ' + userInfo.bmi.toFixed(1);
+            document.getElementById('result-summary').textContent = summaryText;
+
+            lastResultData = { summary: summaryText, items: shareItems };
+
+            pageQuestion.classList.add('hidden');
+            pageResult.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 分享結果
+        var lastResultText = '';
+        var lastResultData = null;
+
+        function buildShareText(resultData) {
+            var lines = ['【保險大冒險】核保結果報告'];
+            lines.push(resultData.summary);
+            lines.push('---');
+            resultData.items.forEach(function(item) {
+                var line = item.name + '：' + item.resultText + '（' + item.rate + '%）';
+                if (item.multiplier) line += ' ' + item.multiplier;
+                lines.push(line);
+            });
+            lines.push('---');
+            lines.push('來挑戰看看你的核保結果吧！');
+            if (window.location.href.startsWith('http')) {
+                lines.push(window.location.href.split('?')[0]);
+            }
+            return lines.join('\n');
+        }
+
+        function showToast(msg) {
+            var existing = document.querySelector('.share-toast');
+            if (existing) existing.remove();
+            var toast = document.createElement('div');
+            toast.className = 'share-toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(function() { toast.remove(); }, 2500);
+        }
+
+        document.getElementById('btn-share').addEventListener('click', function() {
+            if (!lastResultData) return;
+            var text = buildShareText(lastResultData);
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '保險大冒險 — 核保結果',
+                    text: text
+                }).catch(function() {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showToast('結果已複製到剪貼簿！');
+                }).catch(function() {
+                    showToast('複製失敗，請手動複製');
+                });
+            } else {
+                // fallback
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('結果已複製到剪貼簿！');
+            }
+        });
+
+        btnRestart.addEventListener('click', function() {
+            pageResult.classList.add('hidden');
+            pageInfo.classList.remove('hidden');
+            genderSelect.value = '';
+            ageInput.value = '';
+            heightInput.value = '';
+            weightInput.value = '';
+            bmiDisplay.style.display = 'none';
+            btnStart.disabled = true;
+            userSelections = {};
+            currentQuestion = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+    </script>
+</body>
+</html>
