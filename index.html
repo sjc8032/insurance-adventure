@@ -3585,13 +3585,29 @@
 
             var captureEl = document.getElementById('share-capture');
 
+            // 檢查 html2canvas 是否可用
+            if (typeof html2canvas === 'undefined') {
+                // html2canvas 未載入，改用文字分享
+                footer.classList.add('hidden');
+                shareBtn.disabled = false;
+                shareBtn.textContent = '分享結果';
+                var text = buildShareText(lastResultData);
+                if (navigator.share) {
+                    navigator.share({ title: '保險大冒險', text: text }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        showToast('結果已複製到剪貼簿！');
+                    });
+                }
+                return;
+            }
+
             html2canvas(captureEl, {
                 backgroundColor: '#764ba2',
                 scale: 2,
                 useCORS: true,
                 scrollY: -window.scrollY
             }).then(function(canvas) {
-                // 隱藏浮水印
                 footer.classList.add('hidden');
                 shareBtn.disabled = false;
                 shareBtn.textContent = '分享結果';
@@ -3599,7 +3615,6 @@
                 canvas.toBlob(function(blob) {
                     var file = new File([blob], 'insurance-adventure-result.png', { type: 'image/png' });
 
-                    // 手機原生分享（支援圖片）
                     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                         navigator.share({
                             title: '保險大冒險 — 核保結果',
@@ -3607,7 +3622,6 @@
                             files: [file]
                         }).catch(function() {});
                     } else {
-                        // 電腦版：下載圖片
                         var link = document.createElement('a');
                         link.download = 'insurance-adventure-result.png';
                         link.href = canvas.toDataURL('image/png');
@@ -3619,14 +3633,15 @@
                 footer.classList.add('hidden');
                 shareBtn.disabled = false;
                 shareBtn.textContent = '分享結果';
-                // fallback 文字分享
                 var text = buildShareText(lastResultData);
-                if (navigator.clipboard) {
+                if (navigator.share) {
+                    navigator.share({ title: '保險大冒險', text: text }).catch(function() {});
+                } else if (navigator.clipboard) {
                     navigator.clipboard.writeText(text).then(function() {
-                        showToast('截圖失敗，已複製文字結果到剪貼簿');
+                        showToast('截圖失敗，已複製文字結果');
                     });
                 }
-            }
+            });
         });
 
         btnRestart.addEventListener('click', function() {
