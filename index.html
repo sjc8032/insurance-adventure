@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables — 阿貘白底版 */
+        /* CSS Variables — 阿貘品牌 白底版 */
         :root {
             --bg:        #f7f4f1;
             --bg-card:   #ffffff;
@@ -43,97 +43,93 @@
             min-height: 100vh;
             color: var(--text);
             position: relative;
+            font-size: 17px;
         }
 
         .container {
             max-width: 820px;
             margin: 0 auto;
-            padding: 28px 20px;
+            padding: 20px 16px;
         }
 
         /* ─── Header ─── */
         h1 {
             text-align: center;
-            font-family: var(--font-disp);
-            font-size: 2.6em;
-            font-weight: 600;
+            font-family: var(--font-serif);
+            font-size: 2em;
+            font-weight: 700;
             color: var(--tapir-dk);
-            margin: 16px 0 6px;
-            letter-spacing: 0.06em;
-            animation: titleReveal 0.9s ease both;
+            margin: 12px 0 4px;
+            letter-spacing: 0.08em;
+            animation: titleReveal 0.7s ease both;
         }
 
         h1 .subtitle {
             display: block;
             font-family: var(--font-mono);
-            font-size: 0.27em;
+            font-size: 0.38em;
             font-weight: 400;
             color: var(--text-dim);
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            margin-top: 10px;
+            letter-spacing: 0.15em;
+            margin-top: 8px;
         }
 
         @keyframes titleReveal {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ─── Card (基本白卡，用於資訊輸入頁) ─── */
+        /* ─── Card ─── */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 32px;
-            margin-bottom: 16px;
+            border-radius: 10px;
+            padding: 24px 20px;
+            margin-bottom: 14px;
             position: relative;
-            box-shadow: 0 2px 12px rgba(122,107,96,0.08);
+            box-shadow: 0 2px 12px rgba(122,107,96,0.06);
         }
 
         .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 32px; height: 32px;
-            border-top: 2px solid var(--tapir);
-            border-left: 2px solid var(--tapir);
-            border-radius: 8px 0 0 0;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--tapir);
+            border-radius: 10px 10px 0 0;
         }
 
         h2 {
-            font-family: var(--font-mono);
-            font-size: 0.75em;
-            font-weight: 500;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--tapir);
-            margin-bottom: 24px;
+            font-family: var(--font-serif);
+            font-size: 1.15em;
+            font-weight: 700;
+            color: var(--tapir-dk);
+            margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border);
         }
 
         /* ─── Form ─── */
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 18px; }
 
         .form-group label {
             display: block;
-            font-family: var(--font-mono);
-            font-size: 0.7em;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--text-mid);
-            margin-bottom: 8px;
+            font-family: var(--font-serif);
+            font-size: 0.88em;
+            font-weight: 700;
+            color: var(--tapir-dk);
+            margin-bottom: 6px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 11px 14px;
+            padding: 12px 14px;
             background: var(--bg-card2);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 8px;
             color: var(--text);
-            font-family: var(--font-mono);
+            font-family: var(--font-serif);
             font-size: 1em;
             transition: border-color 0.2s, box-shadow 0.2s;
             -webkit-appearance: none;
@@ -155,17 +151,17 @@
 
         .form-group input::placeholder { color: var(--text-dim); }
 
-        .form-row { display: flex; gap: 14px; }
+        .form-row { display: flex; gap: 12px; }
         .form-row .form-group { flex: 1; }
 
         /* ─── BMI Display ─── */
         .bmi-display {
-            font-family: var(--font-mono);
-            padding: 13px 16px;
-            border-radius: 4px;
-            margin-top: 14px;
-            font-size: 0.88em;
-            letter-spacing: 0.06em;
+            font-family: var(--font-serif);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 1em;
+            font-weight: 700;
             display: none;
             border: 1px solid;
         }
@@ -177,10 +173,9 @@
         /* ─── Progress ─── */
         .progress-text {
             font-family: var(--font-mono);
-            font-size: 0.7em;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(247,244,241,0.7);
+            font-size: 0.78em;
+            letter-spacing: 0.1em;
+            color: rgba(247,244,241,0.75);
             margin-bottom: 8px;
             text-align: right;
         }
@@ -188,52 +183,55 @@
         .progress-bar {
             background: rgba(247,244,241,0.2);
             border: 1px solid rgba(247,244,241,0.25);
-            border-radius: 2px;
-            height: 3px;
-            margin-bottom: 20px;
+            border-radius: 4px;
+            height: 6px;
+            margin-bottom: 18px;
             overflow: hidden;
         }
 
         .progress-fill {
-            background: linear-gradient(90deg, rgba(247,244,241,0.5), #ffffff);
+            background: linear-gradient(90deg, rgba(247,244,241,0.5), #fff);
             height: 100%;
-            transition: width 0.6s cubic-bezier(.4,0,.2,1);
+            border-radius: 4px;
+            transition: width 0.5s cubic-bezier(.4,0,.2,1);
         }
 
-        /* ─── 答題卡 — 阿貘咖啡灰底 ─── */
-        #question-card {
+        /* ─── 答題頁主區塊 — 阿貘咖啡灰 ─── */
+        #page-question {
             background: var(--tapir);
+            border-radius: 12px;
+            padding: 20px 16px;
+            margin-bottom: 14px;
+        }
+
+        #question-card {
+            background: transparent;
             border: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(94,82,72,0.25);
+            border-radius: 0;
+            padding: 0;
+            margin-bottom: 0;
+            box-shadow: none;
         }
 
         #question-card::before { display: none; }
 
-        #question-card h2 {
-            color: rgba(247,244,241,0.6);
-            border-bottom-color: rgba(247,244,241,0.15);
-        }
-
         .question-title {
-            font-family: var(--font-mono);
-            font-size: 0.72em;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
+            font-family: var(--font-serif);
+            font-size: 1.1em;
+            font-weight: 700;
             color: var(--warm-white);
-            padding: 9px 14px;
-            background: rgba(94,82,72,0.4);
-            border-left: 3px solid var(--warm-white);
-            border-radius: 0 4px 4px 0;
-            margin-bottom: 20px;
-            opacity: 0.9;
+            padding: 10px 14px;
+            background: rgba(94,82,72,0.35);
+            border-left: 4px solid var(--warm-white);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 16px;
         }
 
         .question-text {
             color: var(--warm-white);
             font-family: var(--font-serif);
-            line-height: 2.1;
-            margin-bottom: 24px;
+            line-height: 2;
+            margin-bottom: 20px;
             font-size: 1.05em;
         }
 
@@ -242,7 +240,7 @@
             font-weight: 700;
         }
 
-        /* ─── Options (在咖啡灰底上) ─── */
+        /* ─── Options ─── */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -251,15 +249,18 @@
 
         @media (max-width: 600px) {
             .options-grid { grid-template-columns: 1fr; }
+            .form-row { flex-direction: column; gap: 0; }
+            h1 { font-size: 1.6em; }
+            .result-header { flex-direction: column; gap: 8px; align-items: flex-start; }
         }
 
         .option-item {
             display: flex;
             align-items: center;
-            padding: 11px 14px;
-            background: rgba(247,244,241,0.12);
-            border: 1px solid rgba(247,244,241,0.2);
-            border-radius: 4px;
+            padding: 12px 14px;
+            background: rgba(247,244,241,0.13);
+            border: 1px solid rgba(247,244,241,0.22);
+            border-radius: 8px;
             cursor: pointer;
             transition: border-color 0.15s, background 0.15s;
             user-select: none;
@@ -278,10 +279,10 @@
         .option-item input[type="checkbox"] { display: none; }
 
         .option-check {
-            width: 18px;
-            height: 18px;
-            border: 1px solid rgba(247,244,241,0.45);
-            border-radius: 3px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(247,244,241,0.45);
+            border-radius: 4px;
             margin-right: 12px;
             flex-shrink: 0;
             display: flex;
@@ -298,28 +299,27 @@
         .option-item.selected .option-check::after {
             content: '\2713';
             color: var(--tapir-dk);
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 700;
         }
 
         .option-label {
             font-family: var(--font-serif);
-            font-size: 0.95em;
+            font-size: 1em;
             line-height: 1.5;
             color: var(--warm-white);
         }
 
         .category-header {
             grid-column: 1 / -1;
-            background: rgba(94,82,72,0.5);
+            background: rgba(94,82,72,0.45);
             border: 1px solid rgba(247,244,241,0.15);
-            padding: 7px 13px;
-            border-radius: 4px;
-            font-family: var(--font-mono);
-            font-size: 0.7em;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(247,244,241,0.65);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-family: var(--font-serif);
+            font-size: 0.88em;
+            font-weight: 700;
+            color: rgba(247,244,241,0.75);
             margin-top: 8px;
         }
 
@@ -328,58 +328,53 @@
         .encourage-msg {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 11px;
-            background: rgba(94,82,72,0.4);
+            padding: 12px;
+            background: rgba(94,82,72,0.35);
             border: 1px dashed rgba(247,244,241,0.25);
-            border-radius: 4px;
-            font-family: var(--font-mono);
-            font-size: 0.78em;
-            color: rgba(247,244,241,0.75);
-            letter-spacing: 0.04em;
+            border-radius: 6px;
+            font-family: var(--font-serif);
+            font-size: 0.9em;
+            color: rgba(247,244,241,0.8);
             margin: 4px 0;
         }
 
         .none-option {
             grid-column: 1 / -1;
-            background: rgba(90,138,98,0.18);
+            background: rgba(90,138,98,0.2);
             border-color: rgba(120,180,130,0.35);
             justify-content: center;
         }
 
         .none-option .option-label {
-            font-family: var(--font-mono);
-            font-size: 0.78em;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #a8dbb0;
+            font-family: var(--font-serif);
+            font-size: 1em;
+            font-weight: 700;
+            color: #b8e0c0;
         }
 
         .none-option.selected {
-            background: rgba(90,138,98,0.28);
-            border-color: #a8dbb0;
+            background: rgba(90,138,98,0.3);
+            border-color: #b8e0c0;
         }
 
         .none-option.selected .option-check {
-            background: #a8dbb0;
-            border-color: #a8dbb0;
+            background: #b8e0c0;
+            border-color: #b8e0c0;
         }
 
         /* ─── Buttons ─── */
         .btn {
             display: inline-block;
-            padding: 12px 36px;
+            padding: 14px 32px;
             border: none;
-            border-radius: 4px;
-            font-family: var(--font-mono);
-            font-size: 0.8em;
-            font-weight: 500;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
+            border-radius: 8px;
+            font-family: var(--font-serif);
+            font-size: 1em;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        /* 答題頁按鈕：深色底（在咖啡灰卡片上） */
         .btn-primary {
             background: var(--tapir-dk);
             color: var(--warm-white);
@@ -387,7 +382,7 @@
 
         .btn-primary:hover {
             background: #4a3e35;
-            box-shadow: 0 4px 14px rgba(94,82,72,0.4);
+            box-shadow: 0 4px 14px rgba(94,82,72,0.35);
             transform: translateY(-1px);
         }
 
@@ -399,17 +394,16 @@
         }
 
         .btn-secondary {
-            background: rgba(247,244,241,0.15);
-            color: rgba(247,244,241,0.75);
-            border: 1px solid rgba(247,244,241,0.22);
+            background: rgba(247,244,241,0.18);
+            color: rgba(247,244,241,0.8);
+            border: 1px solid rgba(247,244,241,0.25);
         }
 
         .btn-secondary:hover {
-            background: rgba(247,244,241,0.22);
+            background: rgba(247,244,241,0.25);
             color: var(--warm-white);
         }
 
-        /* 資訊頁、結果頁按鈕覆寫（白底上） */
         #page-info .btn-primary,
         #page-result .btn-primary {
             background: var(--tapir);
@@ -424,18 +418,18 @@
         .btn-group {
             display: flex;
             justify-content: space-between;
-            margin-top: 28px;
+            margin-top: 24px;
         }
 
         /* ─── Result Cards ─── */
         .result-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 14px;
             position: relative;
-            box-shadow: 0 2px 10px rgba(122,107,96,0.08);
+            box-shadow: 0 2px 10px rgba(122,107,96,0.06);
         }
 
         .result-card::before {
@@ -443,75 +437,71 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--tapir), transparent);
-            border-radius: 8px 8px 0 0;
+            background: var(--tapir);
+            border-radius: 10px 10px 0 0;
         }
 
         .result-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .result-insurance-name {
-            font-family: var(--font-mono);
-            font-size: 0.76em;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-mid);
+            font-family: var(--font-serif);
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--tapir-dk);
         }
 
         .result-badge {
-            padding: 4px 13px;
-            border-radius: 3px;
-            font-family: var(--font-mono);
-            font-weight: 600;
-            font-size: 0.7em;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 0.88em;
             border: 1px solid;
         }
 
-        .badge-standard { background: rgba(90,138,98,0.10);  color: #3d6e45;        border-color: rgba(90,138,98,0.3); }
+        .badge-standard { background: rgba(90,138,98,0.12);  color: #3d6e45;        border-color: rgba(90,138,98,0.3); }
         .badge-light    { background: rgba(122,107,96,0.10); color: var(--tapir-dk); border-color: var(--border-hi); }
-        .badge-medium   { background: rgba(160,120,60,0.10); color: #8a6030;        border-color: rgba(160,120,60,0.3); }
-        .badge-heavy    { background: rgba(158,75,75,0.10);  color: var(--red);     border-color: rgba(158,75,75,0.3); }
-        .badge-exclude  { background: rgba(78,122,150,0.10); color: var(--blue);    border-color: rgba(78,122,150,0.3); }
+        .badge-medium   { background: rgba(180,130,60,0.12); color: #8a6030;        border-color: rgba(180,130,60,0.35); }
+        .badge-heavy    { background: rgba(158,75,75,0.12);  color: var(--red);     border-color: rgba(158,75,75,0.3); }
+        .badge-exclude  { background: rgba(78,122,150,0.10); color: var(--blue);    border-color: rgba(78,122,150,0.28); }
         .badge-defer    { background: rgba(122,107,96,0.07); color: var(--text-mid);border-color: var(--border); }
-        .badge-decline  { background: rgba(158,75,75,0.15);  color: var(--red);     border-color: rgba(158,75,75,0.45); }
+        .badge-decline  { background: rgba(158,75,75,0.15);  color: var(--red);     border-color: rgba(158,75,75,0.4); }
 
         .result-rate {
-            font-family: var(--font-disp);
-            font-size: 3em;
-            font-weight: 600;
+            font-family: var(--font-serif);
+            font-size: 2.4em;
+            font-weight: 700;
             text-align: center;
-            margin: 10px 0;
+            margin: 8px 0;
             color: var(--tapir-dk);
         }
 
         .result-details {
             background: var(--bg-card2);
             border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 14px 18px;
-            margin-top: 14px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 12px;
         }
 
         .result-details h4 {
-            font-family: var(--font-mono);
-            font-size: 0.68em;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            margin-bottom: 10px;
+            font-family: var(--font-serif);
+            font-size: 0.88em;
+            font-weight: 700;
+            color: var(--tapir-dk);
+            margin-bottom: 8px;
         }
 
         .result-details ul { list-style: none; padding: 0; }
 
         .result-details li {
-            padding: 5px 0;
-            font-size: 0.88em;
+            padding: 6px 0;
+            font-size: 0.92em;
             color: var(--text-mid);
             border-bottom: 1px solid rgba(122,107,96,0.08);
         }
@@ -526,7 +516,7 @@
         .exclude-list {
             background: rgba(78,122,150,0.07);
             border: 1px solid rgba(78,122,150,0.18);
-            border-radius: 4px;
+            border-radius: 8px;
             padding: 10px 14px;
             margin-top: 10px;
         }
@@ -535,21 +525,55 @@
             display: inline-block;
             background: rgba(78,122,150,0.1);
             border: 1px solid rgba(78,122,150,0.2);
-            padding: 3px 10px;
-            border-radius: 3px;
+            padding: 4px 10px;
+            border-radius: 4px;
             margin: 3px;
-            font-family: var(--font-mono);
-            font-size: 0.76em;
+            font-size: 0.88em;
             color: var(--blue);
         }
 
         .multiplier-info {
             text-align: center;
-            font-family: var(--font-mono);
-            font-size: 0.8em;
+            font-size: 0.95em;
             color: var(--tapir);
             margin-top: 8px;
-            letter-spacing: 0.06em;
+            font-weight: 700;
+        }
+
+        /* ─── 建議區塊 ─── */
+        .advice-section {
+            background: rgba(90,138,98,0.07);
+            border: 1px solid rgba(90,138,98,0.2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 12px;
+        }
+
+        .advice-section h4 {
+            font-family: var(--font-serif);
+            font-size: 0.92em;
+            font-weight: 700;
+            color: #3d6e45;
+            margin-bottom: 10px;
+        }
+
+        .advice-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(90,138,98,0.12);
+            font-size: 0.9em;
+            line-height: 1.7;
+        }
+
+        .advice-item:last-child { border-bottom: none; }
+
+        .advice-item strong {
+            color: var(--tapir-dk);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .advice-item span {
+            color: var(--text-mid);
         }
 
         /* ─── Watermark & Share ─── */
@@ -562,47 +586,46 @@
             pointer-events: none;
             z-index: 10;
             overflow: hidden;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='200'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='16' fill='rgba(122,107,96,0.07)' transform='rotate(-45,190,100)'%3E%E6%B2%88%E6%8C%AF%E8%B6%85%20%E4%BF%9D%E9%9A%AA%E7%B6%93%E7%B4%80%E4%BA%BA%20%E8%A3%BD%E4%BD%9C%3C%2Ftext%3E%3C%2Fsvg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='200'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='16' fill='rgba(122,107,96,0.06)' transform='rotate(-45,190,100)'%3E%E6%B2%88%E6%8C%AF%E8%B6%85%20%E4%BF%9D%E9%9A%AA%E7%B6%93%E7%B4%80%E4%BA%BA%20%E8%A3%BD%E4%BD%9C%3C%2Ftext%3E%3C%2Fsvg%3E");
             background-repeat: repeat;
         }
 
         .share-footer {
             text-align: center;
-            padding: 24px;
+            padding: 20px;
             margin-top: 14px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(122,107,96,0.06);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(122,107,96,0.05);
         }
 
         .share-footer p {
-            font-family: var(--font-mono);
-            font-size: 0.8em;
+            font-size: 1em;
             color: var(--tapir);
-            letter-spacing: 0.1em;
+            font-weight: 700;
             margin-bottom: 6px;
         }
 
         .share-footer .share-url {
-            font-size: 0.72em;
+            font-size: 0.82em;
             color: var(--text-dim);
             font-weight: normal;
         }
 
         .share-footer .share-author {
-            font-size: 0.7em;
+            font-size: 0.8em;
             color: var(--text-dim);
             font-weight: normal;
             margin-top: 4px;
         }
 
         .share-footer .share-disclaimer {
-            font-size: 0.63em;
+            font-size: 0.72em;
             color: var(--text-dim);
             font-weight: normal;
             margin-top: 12px;
-            line-height: 1.9;
+            line-height: 1.8;
             opacity: 0.65;
         }
 
@@ -620,11 +643,9 @@
             background: var(--tapir-dk);
             border: none;
             color: var(--warm-white);
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-family: var(--font-mono);
-            font-size: 0.8em;
-            letter-spacing: 0.1em;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.92em;
             z-index: 999;
             animation: toastIn 0.3s ease, toastOut 0.3s ease 2s forwards;
         }
@@ -642,23 +663,19 @@
         .fade-in { animation: fadeIn 0.4s ease both; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         .hidden { display: none !important; }
 
         #result-summary {
-            font-family: var(--font-mono);
-            font-size: 0.78em;
-            letter-spacing: 0.1em;
+            font-size: 0.95em;
             color: var(--text-dim);
         }
 
         #page-result .card h2 {
             text-align: center;
-            font-size: 0.85em;
-            letter-spacing: 0.3em;
         }
 
     </style>
@@ -3574,6 +3591,246 @@
             }
         });
 
+// 核保建議對照表 — 每個選項對應一段給客戶的實用建議
+const adviceMap = {
+  // ── BMI ──
+  "BMI < 18.5": "建議維持均衡飲食、增加營養攝取，待體重回到正常範圍後再投保，較有利於核保結果。",
+  "BMI 18.5 - 29.9": "BMI 在正常至微超標範圍，維持規律運動與飲食控制即可，核保通常不受影響。",
+  "BMI >= 30.0": "建議先透過飲食與運動控制體重，BMI 越接近標準值，加費幅度越低甚至可回到標體。",
+
+  // ── Q1：過去兩年疾病 ──
+  "酒精濫用成癮": "建議先完成戒斷療程並取得醫師證明已穩定戒除至少一年以上，再行投保。",
+  "藥物濫用成癮": "建議完成正規戒治療程並取得醫療證明，穩定至少一到兩年後再申請投保。",
+  "眩暈症": "建議至耳鼻喉科確認病因（如內耳問題），取得完整診斷報告，有助於醫療險核保評估。",
+  "腦震盪": "若無後遺症，壽險通常可標體承保。建議取得神經科追蹤報告確認無殘留症狀。",
+  "食道潰瘍": "建議完成治療療程並取得胃鏡報告確認痊癒，醫療險可能除外消化道部位。",
+  "食道出血": "建議完成治療並取得內視鏡複查報告確認無活動性出血，核保時檢附完整病歷。",
+  "胃潰瘍": "建議完成幽門桿菌治療並取得胃鏡痊癒報告，醫療險可能除外消化道部位。",
+  "胃出血": "建議治療痊癒後取得胃鏡複查報告，確認無活動性出血再投保。",
+  "十二指腸潰瘍": "建議完成治療並取得胃鏡複查報告確認痊癒，醫療險可能除外消化道部位。",
+  "十二指腸出血": "建議完成治療並以內視鏡確認痊癒，檢附完整就醫紀錄有助核保。",
+  "潰瘍性大腸炎": "具癌變風險，核保較嚴格。建議定期大腸鏡追蹤，維持穩定用藥紀錄，並檢附最新檢查報告。",
+  "胰臟炎": "建議治療痊癒後取得影像檢查報告確認胰臟功能正常，醫療險可能除外胰臟部位。",
+  "肝膿瘍": "需確認是否完全痊癒。建議取得影像檢查與抽血報告證明肝功能已恢復正常。",
+  "黃疸": "通常被視為嚴重肝病前兆。建議完整檢查肝功能與肝炎指標，釐清病因後再投保。",
+  "肝腫大": "建議進行腹部超音波與肝功能檢查，釐清腫大原因，取得醫師評估報告後再投保。",
+  "脾腫大": "建議釐清脾腫大原因（如肝硬化、血液疾病等），取得完整診斷報告再申請投保。",
+  "慢性支氣管炎": "建議維持穩定用藥與定期回診紀錄，戒菸有助於改善核保結果。",
+  "氣喘": "建議維持規律用藥並取得肺功能檢查報告，控制良好者核保結果較佳。",
+  "肺膿瘍": "心肺功能損害風險高。建議治療痊癒後取得胸部 X 光與肺功能報告再投保。",
+  "肺栓塞": "風險極高。建議治療穩定後取得心肺功能評估報告，並說明是否仍在抗凝血治療中。",
+  "痛風": "關聯代謝症候群。建議控制尿酸值並定期抽血追蹤，數值穩定有助降低加費幅度。",
+  "高血脂症": "建議定期追蹤血脂數值並維持飲食與運動控制，數值穩定者加費幅度較低。",
+  "青光眼": "醫療險通常除外眼部。建議取得眼科定期追蹤報告，確認眼壓控制穩定。",
+  "白內障": "醫療險通常除外眼部。若已手術完成可檢附手術紀錄，有助其他險種核保。",
+
+  // ── Q2：健檢異常 ──
+  "有紅字，但醫生只有叫我多注意飲食跟作息": "建議取得健檢報告完整數值，若僅輕微偏高，可先改善生活習慣後複檢再投保。",
+  "已接受進一步檢查且結果完全正常": "恭喜！建議投保時檢附複檢正常的報告，核保通常可順利通過。",
+  "蛋白尿": "醫療險可能除外泌尿系統。建議複檢確認是否為暫時性，若持續異常需腎臟科評估。",
+  "血尿": "醫療險可能除外腎臟或泌尿部位。建議至泌尿科完整檢查釐清原因後再投保。",
+  "肝功能指標 AST 異常": "建議追蹤是否有脂肪肝或肝炎，取得腹部超音波與 B/C 肝篩檢結果。",
+  "肝功能指標 ALT 異常": "建議進一步檢查是否有脂肪肝或肝炎，取得完整肝臟檢查報告有助核保。",
+  "心電圖異常 (心律不整)": "重大傷病險對心血管風險極敏銳。建議做 24 小時心電圖與心臟超音波評估。",
+  "心電圖異常 (疑似缺血)": "建議進行運動心電圖或心臟超音波檢查，排除冠心病可能後再投保。",
+  "肺部結節": "高危險！癌症險在釐清是否為惡性前通常拒保。建議定期 CT 追蹤並取得穩定不變的影像報告。",
+  "肺部陰影": "建議儘速進一步檢查（CT 或切片），釐清陰影性質後再投保，未釐清前癌症險通常拒保。",
+  "甲狀腺結節": "醫療險可能部位除外，癌症險可能需加費。建議取得細針穿刺或超音波追蹤報告確認良性。",
+  "乳房結節": "醫療險可能除外乳房部位，癌症險需加費。建議取得乳房超音波或切片報告確認良性。",
+  "腫瘤標記 CEA 異常": "腫瘤標記異常是核保紅燈。建議進一步做大腸鏡等相關檢查排除惡性腫瘤。",
+  "腫瘤標記 AFP 異常": "腫瘤標記異常是核保紅燈。建議進一步做腹部超音波與肝臟檢查排除肝癌可能。",
+  "血糖數值紅字": "屬於代謝症候群初期。建議飲食控制並複檢，若數值回到正常範圍可降低加費幅度。",
+  "血脂數值紅字": "屬於代謝症候群初期。建議飲食運動控制後複檢，數值改善有助降低加費。",
+
+  // ── Q3：住院手術 ──
+  "脊椎骨折": "醫療險可能除外受傷部位。建議取得骨科追蹤報告確認癒合良好再投保。",
+  "大腿骨骨折": "醫療險可能除外受傷部位。建議取得 X 光確認癒合完成，並說明恢復狀況。",
+  "心臟繞道手術": "壽險通常重度加費。建議定期心臟科追蹤，維持穩定用藥紀錄，檢附最新心功能報告。",
+  "心臟換瓣膜手術": "壽險通常重度加費。建議定期回診追蹤心臟功能，取得術後穩定的評估報告。",
+  "嚴重肺炎 (曾住加護病房)": "需評估肺部功能受損程度。建議取得肺功能檢查報告，確認恢復狀況再投保。",
+  "腦中風": "癌症險因失能風險可能微加費。建議復健穩定後取得神經科追蹤報告再投保。",
+  "精神疾病住院 (如憂鬱症或焦慮症)": "壽險因意外與自殺風險需觀察期。建議穩定用藥、定期回診，取得精神科醫師穩定證明。",
+  "急性闌尾炎": "若已痊癒，各險種通常皆標體承保。建議檢附手術紀錄與出院摘要即可。",
+  "紅斑性狼瘡住院": "自體免疫疾病核保極嚴。建議維持穩定用藥與定期回診紀錄，取得免疫風濕科評估報告。",
+  "癌症住院治療": "癌症險絕對紅燈。建議治療結束滿五年以上且無復發，再嘗試投保。",
+  "其他 (需檢附病歷個案評估)": "建議備齊完整病歷摘要、診斷書與檢查報告，由保險公司個案評估核保。",
+
+  // ── Q4：重大疾病 ──
+  "高血壓 (收縮壓超過140或舒張壓超過90)": "建議穩定服藥控制血壓，定期量測並記錄，血壓達標者加費幅度較低。",
+  "狹心症": "壽險通常重度加費。建議定期心臟科追蹤，維持穩定治療紀錄。",
+  "心肌梗塞": "壽險通常重度加費。建議術後穩定追蹤心臟功能，取得最新心臟科評估報告。",
+  "心肌肥厚": "建議做心臟超音波確認肥厚程度，定期追蹤心臟功能。",
+  "心內膜炎": "建議治療痊癒後取得心臟超音波報告確認無殘留損傷，再申請投保。",
+  "風濕性心臟病": "建議定期心臟科追蹤，取得最新心臟超音波報告評估瓣膜功能。",
+  "先天性心臟病": "建議取得心臟科完整評估報告，說明目前心功能狀態與是否需手術。",
+  "主動脈血管瘤": "隨時有生命危險，核保極嚴。建議定期影像追蹤並取得血管外科評估報告。",
+  "心臟瓣膜畸型": "建議取得心臟超音波報告評估瓣膜功能，確認是否影響心功能。",
+  "心臟瓣膜閉鎖不全": "建議定期心臟超音波追蹤，取得最新報告說明逆流程度與心功能狀態。",
+  "心臟瓣膜狹窄": "建議定期心臟超音波追蹤，取得報告說明狹窄程度與是否需手術介入。",
+  "腦出血": "建議治療穩定後取得腦部影像與神經科追蹤報告，確認無後遺症再投保。",
+  "腦梗塞": "建議復健穩定後取得神經科追蹤報告，說明功能恢復程度。",
+  "腦栓塞": "建議治療穩定後取得神經科與心臟科評估報告（需排除心源性栓塞）。",
+  "暫時性腦缺血": "建議做頸動脈超音波與腦部影像檢查，排除中風高風險因子。",
+  "腦瘤": "建議取得最新腦部影像報告與神經外科評估，說明腫瘤性質與治療狀況。",
+  "腦動脈血管瘤": "建議定期腦部影像追蹤，取得神經外科評估報告說明大小與破裂風險。",
+  "腦動脈硬化症": "建議定期追蹤腦血管影像，控制血壓與血脂等危險因子。",
+  "癲癇": "建議穩定用藥控制且至少兩年無發作，取得神經科醫師證明後再投保。",
+  "肌肉萎縮症": "建議取得神經科完整評估報告，說明目前疾病進程與功能狀態。",
+  "重症肌無力": "建議維持穩定治療並取得神經科追蹤報告，說明目前控制狀況。",
+  "智能障礙 (外表無法明顯判斷)": "壽險擔心意外風險。建議取得身心障礙鑑定報告，說明障礙等級與生活自理能力。",
+  "巴金森氏症": "建議穩定用藥並取得神經科追蹤報告，說明目前症狀控制與日常功能狀態。",
+  "精神病": "壽險擔心意外與自殺風險。建議穩定治療至少兩年，取得精神科醫師穩定證明。",
+  "老年痴呆症": "建議取得神經科評估報告，說明目前認知功能與日常生活能力。",
+  "多發性硬化症": "建議維持穩定治療並取得神經科追蹤報告，說明復發頻率與功能狀態。",
+  "肺氣腫": "癌症險視為肺癌高危險群。建議戒菸並取得肺功能檢查報告，說明目前呼吸功能。",
+  "支氣管擴張症": "建議取得胸部 CT 與肺功能檢查報告，說明目前呼吸功能與感染頻率。",
+  "塵肺症": "建議取得職業病診斷與肺功能檢查報告，說明暴露史與目前肺部狀況。",
+  "肺結核": "建議完成完整抗結核治療療程，取得痰液培養陰性報告確認痊癒後再投保。",
+  "慢性阻塞性肺病": "建議維持穩定用藥、戒菸，取得肺功能檢查報告說明嚴重程度。",
+  "B型肝炎病毒帶原": "癌症險需長期追蹤肝癌風險。建議每半年做腹部超音波與 AFP 追蹤。",
+  "C型肝炎病毒帶原": "建議完成 C 肝口服藥物治療並取得病毒量檢測為陰性的報告，有助改善核保結果。",
+  "肝炎 (非帶原狀態)": "建議治療痊癒後取得肝功能與病毒量檢測報告，確認已無活動性感染。",
+  "肝內結石": "建議取得腹部超音波追蹤報告，確認結石大小穩定且無膽管阻塞。",
+  "肝硬化": "極高風險，核保非常嚴格。建議定期追蹤肝功能與影像檢查，控制病因。",
+  "肝功能異常 (GOT異常)": "建議追蹤是否有肝炎或脂肪肝，取得完整肝臟檢查報告釐清原因。",
+  "肝功能異常 (GPT異常)": "建議追蹤是否有肝炎或脂肪肝，取得完整肝臟檢查報告釐清原因。",
+  "腎臟炎": "建議治療痊癒後取得腎功能檢查報告，確認腎功能恢復正常。",
+  "腎病症候群": "建議穩定治療並取得腎臟科追蹤報告，說明蛋白尿與腎功能狀態。",
+  "腎機能不全": "重大傷病險必賠項目，核保極嚴。建議取得腎臟科完整評估報告。",
+  "尿毒": "建議取得腎臟科評估報告，說明是否已進入透析治療及目前腎功能狀態。",
+  "腎囊胞": "建議取得腹部超音波追蹤報告，確認囊腫大小穩定且為單純性囊腫。",
+  "視網膜出血": "建議至眼科確認出血原因（如糖尿病、高血壓），取得眼底檢查報告。",
+  "視網膜剝離": "建議術後定期追蹤眼科，取得視網膜穩定的檢查報告再投保。",
+  "視神經病變": "建議至眼科或神經科詳細檢查病因，取得完整評估報告。",
+  "癌症 (惡性腫瘤)": "五年內紀錄通常全部拒保。建議治療結束滿五年以上且無復發再嘗試投保。",
+  "血友病": "建議取得血液科完整評估報告，說明凝血因子缺乏程度與治療狀況。",
+  "白血病": "建議治療緩解後取得血液科追蹤報告，說明目前緩解狀態與追蹤計畫。",
+  "再生不良性貧血": "建議取得血液科追蹤報告，說明血球數值與治療狀況。",
+  "地中海型貧血": "建議取得血液檢查報告說明貧血程度，輕型者核保結果通常較佳。",
+  "紫斑症": "建議取得血液科評估報告，說明血小板數值與出血風險。",
+  "糖尿病": "建議穩定控制血糖（糖化血色素 < 7%），定期追蹤並檢附最新檢查報告。",
+  "類風濕性關節炎": "建議維持穩定用藥並取得免疫風濕科追蹤報告，說明疾病活動度。",
+  "肢端肥大症": "建議取得內分泌科評估報告，說明生長激素數值與治療狀況。",
+  "腦下垂體機能亢進": "建議取得內分泌科完整評估報告，說明激素數值與是否有腫瘤。",
+  "腦下垂體機能低下": "建議取得內分泌科評估報告，說明激素補充治療狀況與追蹤結果。",
+  "甲狀腺功能亢進": "建議穩定治療後取得甲狀腺功能檢查報告，數值正常者核保結果較佳。",
+  "甲狀腺功能低下": "建議穩定服用甲狀腺素並取得功能檢查報告，數值正常者通常可標體。",
+  "副甲狀腺功能亢進": "建議取得血鈣與副甲狀腺素檢查報告，釐清是否需手術治療。",
+  "副甲狀腺功能低下": "建議取得血鈣與副甲狀腺素追蹤報告，確認補充治療效果穩定。",
+  "紅斑性狼瘡": "全身性風險，核保極嚴。建議維持穩定用藥並取得免疫風濕科定期追蹤報告。",
+  "膠原症": "建議取得免疫風濕科完整評估報告，說明目前疾病控制狀況與受影響器官。",
+  "愛滋病": "建議穩定接受抗病毒治療，取得感染科追蹤報告說明病毒量與 CD4 數值。",
+  "愛滋病帶原": "建議穩定服用抗病毒藥物，取得感染科報告顯示病毒量受控。",
+
+  // ── Q5：身體障礙 ──
+  "雙眼失明": "癌症險與視覺無關，通常標體承保。建議備齊身心障礙證明即可。",
+  "單眼失明": "醫療險通常除外眼部。建議備齊診斷證明與身心障礙鑑定報告。",
+  "聾啞": "重大傷病險通常視為已達理賠標準。建議備齊身心障礙證明供核保評估。",
+  "言語機能障害": "醫療險可能除外發音器官。建議備齊診斷證明說明障礙原因與程度。",
+  "咀嚼機能障害": "癌症險可能因營養攝取困難微加費。建議備齊診斷證明說明障礙原因。",
+  "四肢缺肢": "醫療險通常除外該肢體部位。建議備齊身心障礙證明與日常功能評估。",
+  "四肢麻痺": "癌症險因長期臥床風險可能加費。建議備齊神經科評估報告說明麻痺程度。",
+  "四肢變形": "醫療險通常除外受影響部位。建議備齊骨科或復健科評估報告。",
+
+  // ── Q6：女性疾病 ──
+  "乳腺炎": "醫療險通常除外乳房部位。建議治療痊癒後取得乳房超音波正常報告。",
+  "乳漏症": "需注意腦下垂體腫瘤風險。建議檢查泌乳激素與腦部影像，排除腫瘤後再投保。",
+  "子宮內膜異位症": "醫療險通常除外子宮與卵巢。建議定期追蹤並取得婦科超音波報告。",
+  "陰道異常出血 (已確診為良性)": "若已確定原因且為良性，建議檢附婦科診斷報告，核保通常可放寬。",
+  "陰道異常出血 (原因尚未確診)": "需排除子宮頸癌或子宮內膜癌。建議先完成婦科檢查確認原因後再投保。",
+  "懷孕 (28週以內)": "醫療險當次懷孕及其併發症不保。建議現在投保但需知悉此限制。",
+  "懷孕 (超過28週)": "建議生產完且滿月後再投保，屆時核保較不受孕期影響。",
+
+  // ── Q7：一般疾病 ──
+  "肺炎": "醫療險短期內可能除外肺部。建議治療痊癒後取得胸部 X 光正常報告。",
+  "肋膜炎": "醫療險可能除外肺部。建議治療痊癒後取得胸部影像正常報告。",
+  "氣胸": "建議治療痊癒後取得胸部 X 光報告確認無復發，說明是否為自發性。",
+  "心律不整": "重大傷病險對心血管風險極敏銳。建議做 24 小時心電圖評估嚴重程度。",
+  "心雜音": "建議做心臟超音波確認是否為功能性雜音或瓣膜異常，取得報告供核保。",
+  "冠狀動脈硬化": "極高機率演變成心肌梗塞。建議積極控制三高並取得心臟科追蹤報告。",
+  "動靜脈炎": "醫療險可能部位除外。建議治療痊癒後取得血管超音波報告。",
+  "動靜脈畸型": "建議取得血管影像報告評估畸型位置與大小，說明是否需治療。",
+  "靜脈曲張": "建議取得血管超音波報告評估嚴重程度，輕微者核保影響較小。",
+  "胃炎": "醫療險可能除外腸胃道部位。建議治療痊癒後取得胃鏡報告。",
+  "腸炎": "醫療險可能除外腸胃道部位。建議治療痊癒後取得相關檢查報告。",
+  "脂肪肝": "癌症險與肝癌風險微相關。建議控制飲食與體重，定期追蹤肝臟超音波。",
+  "膽石症": "醫療險可能除外膽囊部位。建議取得腹部超音波追蹤報告說明結石狀況。",
+  "膽囊炎": "建議治療痊癒後（或術後）取得影像報告確認無殘留問題。",
+  "腹膜炎": "建議治療痊癒後取得完整病歷，說明發炎原因與恢復狀況。",
+  "腎結石": "醫療險可能除外泌尿系統結石。建議取得超音波報告確認結石狀態。",
+  "輸尿管結石": "醫療險可能除外泌尿系統結石。建議治療後取得影像報告確認排除。",
+  "膀胱結石": "醫療險可能除外泌尿系統。建議治療後取得影像報告確認結石已排除。",
+  "腎膿瘍": "需評估是否影響腎功能。建議取得腎功能檢查與影像報告確認痊癒。",
+  "腎水腫": "建議釐清水腫原因（如結石阻塞），取得腎臟超音波與功能檢查報告。",
+  "腎硬化症": "腎衰竭高風險群。建議定期追蹤腎功能，取得腎臟科評估報告。",
+  "尿道炎": "建議治療痊癒後取得尿液檢查正常報告，通常核保影響較小。",
+  // 注意：血尿與蛋白尿在 Q7 中重複出現，使用相同 key 會覆蓋，以下為 Q7 版本
+  // "血尿" 和 "蛋白尿" 已在 Q2 定義，此處相同 key 會使用同樣的建議
+  "腦膜炎": "視恢復程度可能要求延期。建議取得神經科追蹤報告確認無後遺症。",
+  "關節炎": "醫療險可能除外受損關節。建議取得骨科或免疫風濕科評估報告。",
+  "脊髓炎": "建議取得神經科完整評估報告，說明脊髓功能恢復程度與後遺症。",
+  "脊椎炎": "建議取得骨科或免疫風濕科評估報告，說明發炎控制狀況。",
+  "椎間盤凸出": "醫療險可能除外脊椎部位。建議取得影像報告說明凸出程度與症狀。",
+  "顏面神經麻痺": "需排除中風可能。建議取得神經科評估報告確認病因。",
+  "坐骨神經痛": "建議取得影像檢查釐清壓迫原因（如椎間盤凸出），取得骨科評估報告。",
+  "中耳炎": "醫療險可能除外耳鼻喉部位。建議治療痊癒後取得耳科檢查報告。",
+  "內耳炎": "建議治療痊癒後取得耳科聽力檢查報告，確認無永久性聽損。",
+  "梅尼爾氏症": "建議取得耳鼻喉科追蹤報告，說明發作頻率與控制狀況。",
+  "鼻竇炎": "建議治療痊癒後取得鼻竇影像或耳鼻喉科報告確認改善。",
+  "鼻中膈彎曲": "建議取得耳鼻喉科評估報告，若無症狀通常核保影響較小。",
+  "慢性扁桃腺炎": "建議治療或手術後取得耳鼻喉科報告，確認不再反覆感染。",
+  "舌潰爛": "癌症險需排除口腔癌可能。建議取得口腔外科切片報告確認良性。",
+  "皮膚潰爛": "癌症險需排除皮膚癌可能。建議取得皮膚科切片報告確認良性。",
+  "淋病": "涉及道德風險與併發症。建議完成治療並取得性病篩檢陰性報告。",
+  "梅毒": "涉及道德風險與併發症。建議完成治療並取得 RPR/VDRL 追蹤報告。",
+  "淋巴腺炎": "癌症險必須排除淋巴癌可能。建議取得切片或影像報告確認為良性。",
+  "淋巴腺腫大": "建議進一步檢查排除淋巴癌，取得切片或影像報告確認原因。",
+  "蠶豆症": "先天性或免疫性風險。建議取得血液科報告說明缺乏程度，避免禁忌食物與藥物。",
+  "川崎氏症": "建議取得心臟超音波報告確認冠狀動脈是否有後遺症（如動脈瘤）。",
+  "舞蹈症": "建議取得神經科完整評估報告，說明目前症狀與治療狀況。",
+  "前列腺炎 (男性)": "建議治療痊癒後取得泌尿科檢查報告，確認 PSA 指數正常。",
+  "前列腺肥大 (男性)": "建議取得泌尿科超音波與 PSA 檢查報告，排除惡性可能。",
+  "睪丸腫大 (男性)": "建議取得泌尿科超音波報告釐清腫大原因，排除惡性可能。",
+  "副睪丸腫大 (男性)": "建議取得泌尿科超音波報告釐清腫大原因，排除惡性病變。",
+  "隱睪症 (男性)": "建議取得泌尿科評估報告，若已手術矯正則檢附手術紀錄。",
+  "精索靜脈曲張 (男性)": "建議取得泌尿科超音波報告評估嚴重程度，輕度者核保影響較小。",
+  "疝氣 (男性)": "建議手術修補後取得外科報告確認痊癒，通常可標體承保。",
+  "卵巢囊腫 (女性)": "建議取得婦科超音波追蹤報告，確認囊腫性質與大小穩定。",
+  "骨盆腔炎 (女性)": "建議治療痊癒後取得婦科檢查報告確認無殘留感染。",
+  "陰道炎 (女性)": "建議治療痊癒後取得婦科檢查報告，通常核保影響較小。",
+  "子宮頸糜爛 (女性)": "建議取得子宮頸抹片報告確認無異常細胞，定期追蹤。",
+  "子宮肌瘤 (女性)": "建議取得婦科超音波報告說明肌瘤大小與位置，定期追蹤。",
+  "乳房纖維囊腫 (女性)": "建議取得乳房超音波追蹤報告確認為良性，定期追蹤大小變化。",
+
+  // ── Q8：檢查項目 ──
+  "六個月內有二次或二次以上的 X 光檢查": "頻繁 X 光通常涉及肺部或骨骼追蹤。建議備齊所有檢查報告與醫師說明。",
+  "六個月內有二次或二次以上的超音波檢查": "常用於追蹤腫瘤、結石或心臟問題。建議備齊所有超音波報告供核保參考。",
+  "六個月內有二次或二次以上的血液檢查": "血液指標不穩是全身性風險警訊。建議備齊所有血液報告並說明追蹤原因。",
+  "細胞學檢查": "懷疑癌症的首要步驟。建議取得細胞學檢查結果報告，確認是否為良性。",
+  "內視鏡檢查": "醫療險可能對應器官部位除外。建議取得完整內視鏡報告說明檢查結果。",
+  "核磁共振檢查 (MRI)": "針對腦部、脊椎或不明腫瘤的高階檢查。建議取得完整 MRI 報告與醫師判讀。",
+  "電腦斷層檢查 (CT)": "快速排除重大病變，核保評估較嚴。建議取得完整 CT 報告與醫師判讀結果。",
+  "正子攝影檢查 (PET)": "通常用於癌症篩檢與分期，核保高度敏感。建議取得完整 PET 報告確認結果。",
+  "肌電圖檢查": "針對肌肉萎縮或神經受損。建議取得神經科完整報告說明檢查結果。",
+  "神經傳導檢查": "常用於評估周邊神經或脊髓受壓迫。建議取得神經科報告說明傳導功能。",
+
+  // ── Q9：輕微就診 ──
+  "一般感冒 (已痊癒)": "標體承保，無需擔心！投保時如實告知即可。",
+  "意外受傷 (治療中)": "建議等治療結束並確認痊癒後再投保，醫療險可能除外受傷部位。",
+  "意外受傷 (已痊癒)": "若已痊癒且無後遺症，建議檢附診斷書確認已結案，通常可標體承保。",
+  "牙齒治療 (洗牙、補牙、拔牙)": "標體承保，無需擔心！一般牙科治療不影響核保。",
+  "急性腸胃炎 (已痊癒)": "若無住院紀錄，通常直接承保。建議如實告知就診日期即可。",
+  "皮膚炎": "醫療險可能除外皮膚相關疾病。建議取得皮膚科診斷報告說明病因。",
+  "濕疹": "醫療險可能除外皮膚相關疾病。建議控制病情並取得皮膚科追蹤報告。",
+  "物理治療": "醫療險可能除外該復健部位。建議說明治療原因與復健進度。",
+  "復健中": "建議等復健結束並取得醫師評估恢復良好的報告後再投保。",
+  "準備接受住院治療": "建議等住院治療結束並康復後再投保，避免核保延期。",
+  "準備接受手術治療": "建議等手術結束並確認康復後再投保，避免核保延期。",
+  "原因不明的症狀 (如持續發燒)": "高風險：原因不明是核保大忌。建議先完成全面檢查釐清病因後再投保。",
+  "定期慢性病拿藥": "建議備齊慢性病連續處方箋與最新檢查報告，說明控制狀況與用藥紀錄。"
+};
+
+
         function showResult() {
             var rates = { major: 100, medical: 100, life: 100, cancer: 100 };
             var specials = { major: [], medical: [], life: [], cancer: [] };
@@ -3718,6 +3975,36 @@
             document.getElementById('result-summary').textContent = summaryText;
 
             lastResultData = { summary: summaryText, items: shareItems };
+
+            // 建議區塊
+            var adviceHtml = '';
+            var shownAdvice = {};
+            questions.forEach(function(q) {
+                var selected = userSelections[q.id] || [];
+                var filteredOptions = q.options.filter(function(opt) {
+                    if (userInfo.gender === 'female' && opt.label.includes('(男性)')) return false;
+                    if (userInfo.gender === 'male' && opt.label.includes('(女性)')) return false;
+                    return true;
+                });
+                selected.forEach(function(idx) {
+                    var opt = filteredOptions[idx];
+                    if (!opt) return;
+                    var label = opt.label;
+                    if (adviceMap[label] && !shownAdvice[label]) {
+                        shownAdvice[label] = true;
+                        adviceHtml += '<div class="advice-item"><strong>' + label + '</strong><span>' + adviceMap[label] + '</span></div>';
+                    }
+                });
+            });
+
+            // BMI 建議
+            if (bmiRule && adviceMap[bmiRule.label]) {
+                adviceHtml = '<div class="advice-item"><strong>BMI ' + userInfo.bmi.toFixed(1) + '</strong><span>' + adviceMap[bmiRule.label] + '</span></div>' + adviceHtml;
+            }
+
+            if (adviceHtml) {
+                resultCardsDiv.innerHTML += '<div class="result-card fade-in"><div class="advice-section"><h4>\u5C08\u696D\u5EFA\u8B70</h4>' + adviceHtml + '</div></div>';
+            }
 
             pageQuestion.classList.add('hidden');
             pageResult.classList.remove('hidden');
